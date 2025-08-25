@@ -10,7 +10,7 @@ Towards a Quantitative Assessment of Pragmatic Competence in Generative Large La
 - data/items_implicature.csv — implicature (GCI/PCI) subset
 - APIcall+evaluate.py -ntegration of the the API script with evalution
 - code/evaluate.py — accuracy & macro-recall evaluation
-- metadata/datasheet.md — dataset documentation
+
 
 ## Columns
 Context | Option_A | Option_B | Gold_Label | Phenomenon | Domain | Role_Direction
