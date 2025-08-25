@@ -20,8 +20,8 @@ GENERATION_CONFIG = {
 }
 
 
-# This script is set up for GPT-4.
-GPT_MODEL = "gpt-4-1106-preview"  
+# This script is set up for GPT-45.
+GPT_MODEL = "gpt-5"
 
 def call_openai_api(prompt, model_name=GPT_MODEL):
     """
