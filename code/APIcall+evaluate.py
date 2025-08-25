@@ -6,7 +6,7 @@ import json
 import time
 from collections import defaultdict
 
-# It's recommended to store API keys in environment variables for security.
+# It's recommended to store API keys in environment variables for security. OpenAI as example.
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
