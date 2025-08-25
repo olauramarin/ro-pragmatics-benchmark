@@ -1,7 +1,7 @@
 Context,Option_A,Option_B,Gold_Label,Phenomenon,Domain,Role_Direction
 Context,Option_A,Option_B,Gold_Label,Phenomenon,Domain,Role_Direction
 "Student to Professor: Ionel is in his professor's office, asking for help with his thesis.","Ați putea să-mi recomandați niște cărți pentru capitolul 3, vă rog?","Poți să-mi recomanzi niște cărți pentru capitolul 3, te rog?","A","Politeness","Education","Student->Professor"
-"Professor to Student: A professor is advising a student to use more formal language in their written work.","Te rog să folosești un registru mai academic în lucrare.","Vă rog să folosiți un registru mai academic în lucrare.","B","Politeness","Education","Professor->Student"
+"Professor to Student: A professor is advising a student to use more formal language in their written work.","Te rog să folosești un registru mai academic în lucrare.","Vă rog să folosiți un registru mai academic în lucrare.","A","Politeness","Education","Professor->Student"
 "Citizen to Clerk: Maria is at the city hall and needs to get a new ID card.","V-aș ruga să-mi spuneți ce documente îmi trebuie pentru buletin.","Spune-mi ce documente îmi trebuie pentru buletin.","A","Politeness","Administration","Citizen->Clerk"
 "Clerk to Citizen: A clerk is asking a citizen for an official document.","Trebuie să-mi arăți un act de identitate.","Ați putea să-mi arătați un act de identitate?","B","Politeness","Administration","Clerk->Citizen"
 "Customer to Waiter: A customer is ordering at a high-end restaurant.","Aș dori, vă rog, o porție de paste.","Vreau o porție de paste.","A","Politeness","Services","Customer->Waiter"
