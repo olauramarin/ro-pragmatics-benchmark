@@ -1,5 +1,4 @@
 Context,Option_A,Option_B,Gold_Label,Phenomenon,Domain,Role_Direction
-Context,Option_A,Option_B,Gold_Label,Phenomenon,Domain,Role_Direction
 "Junior Employee to Manager: An employee needs to inform their manager that a project deadline cannot be met.","Nu vom termina proiectul la timp.","Din păcate, cred că nu vom putea termina proiectul la timp.","B","Indirectness","Workplace","Junior->Manager"
 "Customer to Salesperson: A customer wants to politely decline an offer.","Mulțumesc, dar nu sunt interesat.","Nu, nu cumpăr.","A","Indirectness","Commerce","Customer->Salesperson"
 "Student to Professor: A student is politely asking for a delay for an assignment.","M-aș întreba dacă ar fi posibil să predau lucrarea cu o zi mai târziu.","Trebuie să predau lucrarea mai târziu.","A","Indirectness","Education","Student->Professor"
