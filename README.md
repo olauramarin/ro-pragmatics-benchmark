@@ -8,6 +8,7 @@ Towards a Quantitative Assessment of Pragmatic Competence in Generative Large La
 - data/items_politeness.csv — politeness subset
 - data/items_indirectness.csv — indirectness subset
 - data/items_implicature.csv — implicature (GCI/PCI) subset
+- APIcall+evaluate.py -ntegration of the the API script with evalution
 - code/evaluate.py — accuracy & macro-recall evaluation
 - metadata/datasheet.md — dataset documentation
 
