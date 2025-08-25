@@ -1,5 +1,5 @@
 # --- Run Experiment and Get Predictions ---
-# This loop iterates through your loaded prompts, sends each one to the model,
+# This loop iterates through loaded prompts, sends each one to the model,
 # and stores the prediction and correctness result.
 results_data = []
     
@@ -12,7 +12,7 @@ for index, row in enumerate(prompts_data):
         "Select the most pragmatically appropriate option (A or B). Please respond with only 'A' or 'B'."
     )
         
-    # Make the API call to get the model's prediction.
+    # Make the API call to get the model's prediction.OpenAI as example.
     prediction = call_openai_api(prompt)
         
     # Create a new dictionary for the result, including the prediction.
