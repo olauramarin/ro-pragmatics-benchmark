@@ -1,6 +1,6 @@
 
 import csv
-import openai
+from OpenAi import openai
 import os
 import json
 import time
@@ -8,7 +8,7 @@ from collections import defaultdict
 
 # It's recommended to store API keys in environment variables for security. OpenAI as example.
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI("OPENAI_API_KEY")
 
 # --- Model Selection and Configuration ---.
 # The 'temperature' parameter controls the randomness of the output.
