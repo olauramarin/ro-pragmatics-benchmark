@@ -49,7 +49,6 @@ Context,Option_A,Option_B,Gold_Label,Phenomenon,Domain,Role_Direction
 "A waiter is talking about a customer.","Clientul a fost, să zicem, politicos.","Clientul a fost foarte politicos.","A","GCI","Services","Waiter->Waiter"
 "A colleague is describing a meeting.","Am discutat mai multe aspecte.","Am discutat toate aspectele.","A","GCI","Workplace","Colleague->Colleague"
 "A student is talking about their weekend.","Am ieșit cu câțiva prieteni în oraș.","Am ieșit cu toți prietenii în oraș.","A","GCI","Education","Student->Student"
-Context,Option_A,Option_B,Gold_Label,Phenomenon,Domain,Role_Direction
 "Two students are discussing a test.","Am rezolvat o parte din exerciții.","Am rezolvat toate exercițiile.","A","GCI","Education","Student->Student"
 "A father is asking his daughter about her friends.","Toți prietenii mei au venit la petrecere.","Unii dintre prietenii mei au venit la peterecere.","B","GCI","Family","Parent->Child"
 "A manager is asking about the team's progress.","Majoritatea rapoartelor au fost finalizate.","Toate rapoartele au fost finalizate.","A","GCI","Workplace","Manager->Employee"
