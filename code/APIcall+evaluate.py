@@ -12,7 +12,7 @@ import os
 
 
 
-client = OpenAI("insert key here or insert it using the terminal")
+client = OpenAI(api_key="insert key here or insert it using the terminal")
 
 
 GENERATION_CONFIG = {
