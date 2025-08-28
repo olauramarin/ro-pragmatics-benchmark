@@ -12,7 +12,7 @@ import os
 
 #openai as an example. api calls can be found in the documentation for each model.
 
-client = OpenAI(api_key="insert key here or insert it using the terminal")
+client = OpenAI(api_key="insert key here if you want it hardcoded or insert it using the terminal")
 
 
 GENERATION_CONFIG = {
