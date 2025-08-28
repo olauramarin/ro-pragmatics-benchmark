@@ -1,62 +1,42 @@
-
 import csv
-from OpenAi import openai
+import openai 
+from openai import OpenAI
 import os
 import json
 import time
 from collections import defaultdict
 
-# It's recommended to store API keys in environment variables for security. OpenAI as example.
 
-client = OpenAI("OPENAI_API_KEY")
+import os 
 
-# --- Model Selection and Configuration ---.
-# The 'temperature' parameter controls the randomness of the output.
-# A value of 0.0 ensures the output is the same every time for the same input.
+
+
+
+client = OpenAI("insert key here or insert it using the terminal")
+
+
 GENERATION_CONFIG = {
-    "temperature": 0.0,
-    "top_p": 1.0,  # top_p = 1.0 ensures no tokens are filtered based on probability mass
-    "n": 1,        # Request only one response
+    "n": 1   # request one response
 }
 
-
-# This script is set up for GPT-45.
 GPT_MODEL = "gpt-5"
 
 def call_openai_api(prompt, model_name=GPT_MODEL):
-    """
-    Calls the OpenAI API to get a forced-choice response.
-    
-    Args:
-        prompt (str): The constructed prompt for the model.
-        model_name (str): The name of the OpenAI model to use.
-        
-    Returns:
-        str: The model's response, or None if an error occurs.
-    """
     try:
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model=model_name,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that analyzes pragmatic cues in Romanian. Your only task is to choose the most appropriate option between A and B based on the provided context."},
+                {"role": "system", "content": "You are a helpful assistant that analyzes pragmatic cues in Romanian. Choose the most appropriate option between A and B."},
                 {"role": "user", "content": prompt}
             ],
             **GENERATION_CONFIG,
         )
-        # The model's response is in the 'content' of the first choice.
-        # We also strip any leading/trailing whitespace.
         prediction = response.choices[0].message.content.strip().upper()
-        # Ensure the prediction is only 'A' or 'B'
         if prediction not in ["A", "B"]:
-            # If the model gives an extraneous response, we treat it as incorrect.
             return "UNKNOWN"
         return prediction
-    except openai.RateLimitError:
-        print("Rate limit exceeded. Waiting before retrying...")
-        time.sleep(60)  # Wait for 60 seconds
-        return call_openai_api(prompt, model_name)
     except Exception as e:
-        print(f"An API error occurred: {e}")
+        print(f"API error: {e}")
         return None
 
 def main():
