@@ -10,7 +10,7 @@ from collections import defaultdict
 import os 
 
 
-
+#openai as an example. api calls can be found in the documentation for each model.
 
 client = OpenAI(api_key="insert key here or insert it using the terminal")
 
