@@ -26,7 +26,7 @@ def call_openai_api(prompt, model_name=GPT_MODEL):
         response = client.chat.completions.create(
             model=model_name,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that analyzes pragmatic cues in Romanian. Choose the most appropriate option between A and B."},
+                {"role": "system", "content": "Ești un asistent util care analizează indiciile pragmatice în limba română. Alege opțiunea cea mai potrivită între A și B."},
                 {"role": "user", "content": prompt}
             ],
             **GENERATION_CONFIG,
