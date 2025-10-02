@@ -5,15 +5,14 @@ import os
 import json
 import time
 from collections import defaultdict
+from dataclasses import dataclass
 
 
 import os 
 
-
 #OpenAI-GPT5 as an example. API calls can be found in the documentation for each model.
 
 client = OpenAI(api_key="insert key here if you want it hardcoded or insert it using the terminal")
-
 
 GENERATION_CONFIG = {
     "n": 1   # request one response
@@ -26,7 +25,9 @@ def call_openai_api(prompt, model_name=GPT_MODEL):
         response = client.chat.completions.create(
             model=model_name,
             messages=[
-                {"role": "system", "content": "Ești un asistent util care analizează indiciile pragmatice în limba română. Alege opțiunea cea mai potrivită între A și B."},
+                {"role": "system", "content": "Ești un asistent util care "
+                    "analizează indiciile pragmatice în limba română. "
+                    "Alege opțiunea cea mai potrivită între A și B."},
                 {"role": "user", "content": prompt}
             ],
             **GENERATION_CONFIG,
@@ -44,7 +45,7 @@ def main():
     Main function to run the evaluation experiment.
     """
   
-    input_csv_path = "ro-pragmatics-benchmark/data/items_all.csv"
+    input_csv_path = "./data/items_all.csv"
     prompts_data = []
     
     try:
@@ -67,7 +68,8 @@ def main():
             f"Context: {row['Context']}\n\n"
             f"A: {row['Option_A']}\n"
             f"B: {row['Option_B']}\n\n"
-            "Select the most pragmatically appropriate option (A or B). Please respond with only 'A' or 'B'."
+            "Select the most pragmatically appropriate option (A or B). "
+            "Please respond with only 'A' or 'B'."
         )
         
         # Make the API call to get the model's prediction.
@@ -79,67 +81,81 @@ def main():
         result_row['Correct'] = 'True' if prediction == row['Gold_Label'] else 'False'
         results_data.append(result_row)
         
-        print(f"Prompt {index+1}/{len(prompts_data)} | Gold: {row['Gold_Label']} | Prediction: {prediction} | Correct: {result_row['Correct']}")
+        print(f"Prompt {index+1}/{len(prompts_data)} | Gold: {row['Gold_Label']}"
+              f" | Prediction: {prediction} | Correct: {result_row['Correct']}")
 
     # --- Analysis and Reporting ---
     print("\n--- Quantitative Analysis ---")
+
+    # A dataclass for holding correctness/totals
+    @dataclass
+    class Metric:
+        correct: int
+        total: int
     
+    # Compute correct percentage from a metric
+    def calc_percentage(m):
+        return (m.correct / m.total) * 100 if m.total > 0 else 0
+
     # Calculate Correctness for Analysis
-    correct_counts = sum(1 for row in results_data if row['Correct'] == 'True')
-    total_items = len(results_data)
+    overall_metric = Metric(
+            correct=sum(1 for row in results_data if row['Correct'] == 'True'),
+            total=len(results_data))
     
     # Overall Accuracy
-    overall_accuracy = (correct_counts / total_items) * 100 if total_items > 0 else 0
-    print(f"\nTotal Accuracy: {overall_accuracy:.2f}% ({correct_counts}/{total_items} correct)")
-    
+    print(f"\nTotal Accuracy: {calc_percentage(overall_metric):.2f}%"
+          f"({correct_counts}/{total_items} correct)")
+
+
     # Accuracy per Phenomenon, Domain, and Role-Direction
-    metrics = defaultdict(lambda: {'correct': 0, 'total': 0})
+    phenomenon_metrics = defaultdict(lambda: Metric(0, 0))
+    domain_metrics = defaultdict(lambda: Metric(0, 0))
+    role_direction_metrics = defaultdict(lambda: Metric(0, 0))
+
     for row in results_data:
         phenomenon = row['Phenomenon']
         domain = row['Domain']
         role_direction = row['Role_Direction']
         is_correct = row['Correct'] == 'True'
 
-        metrics['phenomenon'][phenomenon]['total'] += 1
-        metrics['domain'][domain]['total'] += 1
-        metrics['role_direction'][role_direction]['total'] += 1
+        phenomenon_metrics[phenomenon].total += 1
+        domain_metrics[domain].total += 1
+        role_direction_metrics[role_direction].total += 1
         
         if is_correct:
-            metrics['phenomenon'][phenomenon]['correct'] += 1
-            metrics['domain'][domain]['correct'] += 1
-            metrics['role_direction'][role_direction]['correct'] += 1
+            phenomenon_metrics[phenomenon].correct += 1
+            domain_metrics[domain].correct += 1
+            role_direction_metrics[role_direction].correct += 1
+
+    def print_accuracies(metrics):
+        for key, val in metrics.items():
+            print(f"{key:<15}: {calc_percentage(val):.2f}%")
 
     print("\nAccuracy by Phenomenon:")
-    for key, val in metrics['phenomenon'].items():
-        accuracy = (val['correct'] / val['total']) * 100 if val['total'] > 0 else 0
-        print(f"{key:<15}: {accuracy:.2f}%")
+    print_accuracies(phenomenon_metrics)
     
     print("\nAccuracy by Domain:")
-    for key, val in metrics['domain'].items():
-        accuracy = (val['correct'] / val['total']) * 100 if val['total'] > 0 else 0
-        print(f"{key:<15}: {accuracy:.2f}%")
+    print_accuracies(domain_metrics)
         
     print("\nAccuracy by Role-Direction:")
-    for key, val in metrics['role_direction'].items():
-        accuracy = (val['correct'] / val['total']) * 100 if val['total'] > 0 else 0
-        print(f"{key:<15}: {accuracy:.2f}%")
+    print_accuracies(role_direction_metrics)
 
     # Macro-Recall
-    gold_A_counts = {'correct': 0, 'total': 0}
-    gold_B_counts = {'correct': 0, 'total': 0}
+    gold_A_counts = Metric(0, 0)
+    gold_B_counts = Metric(0, 0)
     for row in results_data:
         if row['Gold_Label'] == 'A':
-            gold_A_counts['total'] += 1
+            gold_A_counts.total += 1
             if row['Correct'] == 'True':
-                gold_A_counts['correct'] += 1
+                gold_A_counts.correct += 1
         else: # row['Gold_Label'] == 'B'
-            gold_B_counts['total'] += 1
+            gold_B_counts.total += 1
             if row['Correct'] == 'True':
-                gold_B_counts['correct'] += 1
+                gold_B_counts.correct += 1
                 
-    recall_A = (gold_A_counts['correct'] / gold_A_counts['total']) if gold_A_counts['total'] > 0 else 0
-    recall_B = (gold_B_counts['correct'] / gold_B_counts['total']) if gold_B_counts['total'] > 0 else 0
-    macro_recall = ((recall_A + recall_B) / 2) * 100
+    recall_A = calc_percentage(gold_A_counts)
+    recall_B = calc_percentage(gold_B_counts)
+    macro_recall = ((recall_A + recall_B) / 2)
     print(f"\nMacro-Recall: {macro_recall:.2f}%")
 
     # --- Save Results ---
