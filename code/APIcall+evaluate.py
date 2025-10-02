@@ -104,7 +104,7 @@ def main():
     
     # Overall Accuracy
     print(f"\nTotal Accuracy: {calc_percentage(overall_metric):.2f}%"
-          f"({correct_counts}/{total_items} correct)")
+          f"({overall_metric.correct}/{overall_metric.total} correct)")
 
 
     # Accuracy per Phenomenon, Domain, and Role-Direction
